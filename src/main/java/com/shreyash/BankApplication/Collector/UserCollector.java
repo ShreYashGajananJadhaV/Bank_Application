@@ -19,12 +19,12 @@ public class UserCollector {
         return userService.createAccount(userRequest);
     }
 
-    @PostMapping("/balance")
+    @GetMapping("/balance")
     public BankResponse balanceEnquiry(@RequestBody EnquiryRequest enquiryRequest){
         return userService.balanceEnquiry(enquiryRequest);
     }
 
-    @PostMapping("/name")
+    @GetMapping("/name")
     public String nameEnquiry(@RequestBody EnquiryRequest enquiryRequest){
         return userService.nameEnquiry(enquiryRequest);
     }
