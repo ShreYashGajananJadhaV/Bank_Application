@@ -32,6 +32,7 @@ public class UserService  implements UserServiceInterface{
                     .build();
         }
 
+
         User newuser = User.builder()
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
