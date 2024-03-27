@@ -4,6 +4,7 @@ import com.shreyash.BankApplication.SingletonClasses.EntityObject
 import com.shreyash.BankApplication.dto.SignInRequest
 import com.shreyash.BankApplication.dto.SignInResponse
 import com.shreyash.BankApplication.repository.UserRepository
+import com.shreyash.BankApplication.service.serviceImpl.PermitSerivce
 import com.shreyash.BankApplication.utils.AccountUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -24,7 +25,7 @@ class SignInTests {
     private lateinit var userRepository: UserRepository;
 
     @Autowired
-    private lateinit var permitService: PermitService;
+    private lateinit var permitService: PermitSerivce;
 
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder;

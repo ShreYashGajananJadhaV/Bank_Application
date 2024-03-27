@@ -9,6 +9,7 @@ import com.shreyash.BankApplication.repository.AccountRepository
 import com.shreyash.BankApplication.utils.AccountUtils
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import com.shreyash.BankApplication.service.serviceImpl.SecuredService
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension

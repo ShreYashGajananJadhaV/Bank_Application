@@ -5,6 +5,7 @@ import com.shreyash.BankApplication.SingletonClasses.EntityObject
 import com.shreyash.BankApplication.dto.AccountInfo
 import com.shreyash.BankApplication.dto.EnquiryRequest
 import com.shreyash.BankApplication.repository.AccountRepository
+import com.shreyash.BankApplication.service.serviceImpl.SecuredService
 import com.shreyash.BankApplication.utils.AccountUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

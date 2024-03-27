@@ -3,6 +3,7 @@ package com.shreyash.BankApplication
 import com.shreyash.BankApplication.SingletonClasses.EntityObject
 import com.shreyash.BankApplication.dto.AccountDetail
 import com.shreyash.BankApplication.repository.UserRepository
+import com.shreyash.BankApplication.service.serviceImpl.SecuredService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

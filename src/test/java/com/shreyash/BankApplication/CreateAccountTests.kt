@@ -6,6 +6,7 @@ import com.shreyash.BankApplication.dto.AccountInfo
 import com.shreyash.BankApplication.dto.BankResponse
 import com.shreyash.BankApplication.dto.UserRequest
 import com.shreyash.BankApplication.repository.ContactRepository
+import com.shreyash.BankApplication.service.serviceImpl.SecuredService
 import com.shreyash.BankApplication.utils.AccountUtils
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -31,7 +32,7 @@ class CreateAccountTests {
     private lateinit var passwordEncoder: PasswordEncoder;
 
     @Autowired
-    private lateinit var securedService: SecuredService;
+    private lateinit var securedService: SecuredService
 
 
     @Test

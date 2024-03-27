@@ -1,5 +1,6 @@
 package com.shreyash.BankApplication
 
+import com.shreyash.BankApplication.service.serviceImpl.SecuredService
 import com.shreyash.BankApplication.authorities.AccountType
 import com.shreyash.BankApplication.SingletonClasses.EntityObject
 import com.shreyash.BankApplication.dto.AccountInfo
