@@ -38,7 +38,7 @@ class PermitSerivce :PermitServiceInterface{
                 CreateProfileResponse(
                     user.customerID,
                     user.firstName + " " + user.lastName,
-                    AccountUtils.ACCOUNT_EXISTS_MESSAGE
+                    AccountUtils.PROFILE_EXISTS_MESSAGE
                 )
             )
         }
@@ -93,7 +93,7 @@ class PermitSerivce :PermitServiceInterface{
             CreateProfileResponse(
                 user.customerID,
                 user.firstName+" "+user.lastName,
-                AccountUtils.ACCOUNT_CREATION_MESSAGE
+                AccountUtils.PROFILE_CREATION_MESSAGE
             )
         )
 
