@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
-  <component name="FacetManager">
-    <facet type="jpa" name="JPA">
-      <configuration>
-        <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping>
-          <factory-entry name="entityManagerFactory" />
-        </datasource-mapping>
-        <naming-strategy-map />
-      </configuration>
-    </facet>
+  <component name="AutoImportedSourceRoots">
+    <option name="directories">
+      <list>
+        <option value="D:\All downloads\SpringProjects\BankApplication/src/main/java" />
+        <option value="D:\All downloads\SpringProjects\BankApplication/src/main/kotlin" />
+        <option value="D:\All downloads\SpringProjects\BankApplication/src/test/java" />
+        <option value="D:\All downloads\SpringProjects\BankApplication/src/test/kotlin" />
+        <option value="src/main/java" />
+        <option value="target/generated-sources/annotations" />
+      </list>
+    </option>
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="c7bf81f7-0077-40d0-903b-49c09a7015d1" />
   </component>
 </module>

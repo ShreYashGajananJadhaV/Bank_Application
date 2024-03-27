@@ -1,13 +1,16 @@
 
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(»¼Ó 
-P
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(»¼Ó 8ÇŸ˜½Ğ1
+v	java:S115$"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Á‹Ä±8ØŸ˜½Ğ1
+W
 java:S1118
-":Add a private constructor to hide the implicit public one.(±éó
-4
-java:S2119("Save and re-use this "Random".(ŒĞï‚
-`
-java:S1128"JRemove this unused import 'com.shreyash.BankApplication.DTO.BankResponse'.(÷å‹
-i
-java:S1128"SRemove this unused import 'com.shreyash.BankApplication.Repository.UserRepository'.(ï¸Ç”
-n
-java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡¸Îùÿÿÿÿ
+":Add a private constructor to hide the implicit public one.(±éó8ÜŸ˜½Ğ1
+;
+java:S2119/"Save and re-use this "Random".(ŒĞï‚8àŸ˜½Ğ1
+K
+java:S21406")Use "java.util.Random.nextInt()" instead.(İµ¹¾øÿÿÿÿ8áŸ˜½Ğ1
+b
+java:S1128"ERemove this unused import 'com.shreyash.BankApplication.DTO.UserDTO'.(Û¡Ò8‘ÔÙèà1
+H
+java:S1128"+Remove this unused import 'java.util.Date'.(¸…¼ü8‘ÔÙèà1
+J
+java:S1068$"-Remove this unused "secretKey" private field.(Á‹Ä±8Ô¸¬ßÚ1
