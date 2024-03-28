@@ -16,7 +16,7 @@ import java.math.BigDecimal
 
 
 @Service
-class SecuredService:SecuredServiceInterface {
+class SecuredService : SecuredServiceInterface {
 
     @Autowired
     private lateinit var userRepository: UserRepository
@@ -36,7 +36,7 @@ class SecuredService:SecuredServiceInterface {
         val panCardNumber = userRequest.panCardNumber
         var contact = contactRepository.findByPanCard(panCardNumber)
 
-        var user = contact.user
+        var user = contact!!.user
         val accounts = contact.account
 
         val accountTypeByUser = userRequest.accountType
@@ -44,18 +44,18 @@ class SecuredService:SecuredServiceInterface {
         val type: AccountType
         if (accountTypeByUser == AccountType.SAVINGS) {
             type = AccountType.SAVINGS
-            for (account in accounts) {
+            for (account in accounts!!) {
                 if (account.accountType == AccountType.SAVINGS) {
                     return ResponseEntity.ok(
                         BankResponse(
                             AccountUtils.ACCOUNT_EXISTS_CODE,
                             AccountUtils.ACCOUNT_EXISTS_MESSAGE,
                             AccountInfo(
-                                contact.user.customerID,
-                                user.firstName,
-                                account.accountBalance,
-                                account.accountNumber,
-                                AccountType.SAVINGS
+                                customerID = contact.user!!.customerID,
+                                accountHolderName = user!!.firstName,
+                                accountBalance = account.accountBalance,
+                                accountNumber = account.accountNumber,
+                                accountType = AccountType.SAVINGS
                             )
                         )
                     )
@@ -63,47 +63,47 @@ class SecuredService:SecuredServiceInterface {
             }
 
 
-            val newAccount = Account.builder()
-                .accountNumber(AccountUtils.generateAccountNumber())
-                .pinCode(passwordEncoder.encode(userRequest.pinCode))
-                .accountBalance(userRequest.creditMoney)
-                .accountType(type)
-                .build()
+            val newAccount = Account(
+                accountNumber = AccountUtils.generateAccountNumber(),
+                pinCode = passwordEncoder.encode(userRequest.pinCode),
+                accountBalance = userRequest.creditMoney,
+                accountType = type
+            )
 
             newAccount.contact = contact
             accountRepository.save(newAccount)
 
-            accounts.add(newAccount)
+            accounts.plusElement(newAccount)
             contact.account = accounts
             contact = contactRepository.save(contact)
 
-            user.contact = contact
+            user!!.contact = contact
             user = userRepository.save(user)
 
             return ResponseEntity.ok(
                 BankResponse(
-                    AccountUtils.ACCOUNT_CREATION_CODE,
-                    AccountUtils.ACCOUNT_CREATION_MESSAGE,
-                    AccountInfo(
-                        contact.user.customerID,
-                        user.firstName,
-                        newAccount.accountBalance,
-                        newAccount.accountNumber,
-                        AccountType.SAVINGS
+                    responseCode = AccountUtils.ACCOUNT_CREATION_CODE,
+                    responseMessage = AccountUtils.ACCOUNT_CREATION_MESSAGE,
+                    accountInfo = AccountInfo(
+                        customerID = contact.user!!.customerID,
+                        accountHolderName = user.firstName,
+                        accountBalance = newAccount.accountBalance,
+                        accountNumber = newAccount.accountNumber,
+                        accountType = AccountType.SAVINGS
                     )
                 )
             )
         }
         type = AccountType.CURRENT
-        for (account in accounts) {
+        for (account in accounts!!) {
             if (account.accountType == AccountType.CURRENT) {
                 return ResponseEntity.ok(
                     BankResponse(
                         AccountUtils.ACCOUNT_EXISTS_CODE,
                         AccountUtils.ACCOUNT_EXISTS_MESSAGE,
                         AccountInfo(
-                            contact.user.customerID,
-                            user.firstName,
+                            contact.user!!.customerID,
+                            user!!.firstName,
                             account.accountBalance,
                             account.accountNumber,
                             AccountType.CURRENT
@@ -112,33 +112,33 @@ class SecuredService:SecuredServiceInterface {
                 )
             }
         }
-        val newAccount = Account.builder()
-            .accountNumber(AccountUtils.generateAccountNumber())
-            .pinCode(passwordEncoder.encode(userRequest.pinCode))
-            .accountBalance(userRequest.creditMoney)
-            .accountType(type)
-            .build()
+        val newAccount = Account(
+            accountNumber = AccountUtils.generateAccountNumber(),
+            pinCode = passwordEncoder.encode(userRequest.pinCode),
+            accountBalance = userRequest.creditMoney,
+            accountType = type
+        )
 
         newAccount.contact = contact
         accountRepository.save(newAccount)
 
-        accounts.add(newAccount)
+        accounts.plusElement(newAccount)
         contact.account = accounts
         contactRepository.save(contact)
 
-        user.contact = contact
+        user!!.contact = contact
         userRepository.save(user)
 
         return ResponseEntity.ok(
             BankResponse(
-                AccountUtils.ACCOUNT_CREATION_CODE,
-                AccountUtils.ACCOUNT_CREATION_MESSAGE,
-                AccountInfo(
-                    contact.user.customerID,
-                    user.firstName,
-                    newAccount.accountBalance,
-                    newAccount.accountNumber,
-                    AccountType.CURRENT
+                responseCode = AccountUtils.ACCOUNT_CREATION_CODE,
+                responseMessage = AccountUtils.ACCOUNT_CREATION_MESSAGE,
+                accountInfo = AccountInfo(
+                    customerID = contact.user!!.customerID,
+                    accountHolderName = user.firstName,
+                    accountBalance = newAccount.accountBalance,
+                    accountNumber = newAccount.accountNumber,
+                    accountType = AccountType.CURRENT
                 )
             )
         )
@@ -149,38 +149,38 @@ class SecuredService:SecuredServiceInterface {
         if (!accountExists) {
             return ResponseEntity.ok(
                 AccountInfo(
-                    AccountUtils.USER_NO_DATA_FOUND,
-                    AccountUtils.USER_NO_DATA_FOUND,
-                    BigDecimal.ZERO,
-                    enquiryRequest.accountNumber,
-                    AccountType.NOT_MENTIONED
+                    customerID = AccountUtils.USER_NO_DATA_FOUND,
+                    accountHolderName = AccountUtils.USER_NO_DATA_FOUND,
+                    accountBalance = BigDecimal.ZERO,
+                    accountNumber = enquiryRequest.accountNumber,
+                    accountType = AccountType.NOT_MENTIONED
                 )
             )
         }
 
         val account = accountRepository.findByAccountNumber(enquiryRequest.accountNumber)
-        if (!passwordEncoder.matches(enquiryRequest.pinCode, account.pinCode)) {
+        if (!passwordEncoder.matches(enquiryRequest.pinCode, account!!.pinCode)) {
             return ResponseEntity.ok(
                 AccountInfo(
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    BigDecimal.ZERO,
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    AccountType.NOT_MENTIONED
+                    customerID = AccountUtils.USER_INVALID_MESSAGE,
+                    accountHolderName = AccountUtils.USER_INVALID_MESSAGE,
+                    accountBalance = BigDecimal.ZERO,
+                    accountNumber = AccountUtils.USER_INVALID_MESSAGE,
+                    accountType = AccountType.NOT_MENTIONED
                 )
             )
         }
 
         val contact = account.contact
-        val user = contact.user
+        val user = contact!!.user
 
         return ResponseEntity.ok(
             AccountInfo(
-                user.customerID,
-                user.firstName + " " + user.lastName,
-                account.accountBalance,
-                account.accountNumber,
-                account.accountType
+                customerID = user!!.customerID,
+                accountHolderName = user.firstName + " " + user.lastName,
+                accountBalance = account.accountBalance,
+                accountNumber = account.accountNumber,
+                accountType = account.accountType
             )
         )
 
@@ -193,27 +193,27 @@ class SecuredService:SecuredServiceInterface {
         if (!accountExists) {
             return ResponseEntity.ok(
                 AccountInfo(
-                    AccountUtils.USER_ABSENT_MESSAGE,
-                    AccountUtils.USER_ABSENT_MESSAGE,
-                    BigDecimal.ZERO,
-                    AccountUtils.USER_ABSENT_MESSAGE,
-                    AccountType.NOT_MENTIONED
+                    customerID = AccountUtils.USER_ABSENT_MESSAGE,
+                    accountHolderName = AccountUtils.USER_ABSENT_MESSAGE,
+                    accountBalance = BigDecimal.ZERO,
+                    accountNumber = AccountUtils.USER_ABSENT_MESSAGE,
+                    accountType = AccountType.NOT_MENTIONED
                 )
             )
         }
 
         var account = accountRepository.findByAccountNumber(creditDebitRequest.accountNumber)
-        val contact = account.contact
-        val user = contact.user
+        val contact = account!!.contact
+        val user = contact!!.user
 
         if (!passwordEncoder.matches(creditDebitRequest.pinCode, account.pinCode)) {
             return ResponseEntity.badRequest().body(
                 AccountInfo(
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    BigDecimal.ZERO,
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    AccountType.NOT_MENTIONED
+                    customerID = AccountUtils.USER_INVALID_MESSAGE,
+                    accountHolderName = AccountUtils.USER_INVALID_MESSAGE,
+                    accountBalance = BigDecimal.ZERO,
+                    accountNumber = AccountUtils.USER_INVALID_MESSAGE,
+                    accountType = AccountType.NOT_MENTIONED
                 )
             )
         }
@@ -223,11 +223,11 @@ class SecuredService:SecuredServiceInterface {
 
         return ResponseEntity.ok(
             AccountInfo(
-                user.customerID,
-                user.firstName + " " + user.lastName,
-                account.accountBalance,
-                account.accountNumber,
-                account.accountType
+                customerID = user!!.customerID,
+                accountHolderName = user.firstName + " " + user.lastName,
+                accountBalance = account.accountBalance,
+                accountNumber = account.accountNumber,
+                accountType = account.accountType
             )
         )
     }
@@ -239,26 +239,26 @@ class SecuredService:SecuredServiceInterface {
         if (!accountExists) {
             return ResponseEntity.ok(
                 AccountInfo(
-                    AccountUtils.USER_ABSENT_MESSAGE,
-                    AccountUtils.USER_ABSENT_MESSAGE,
-                    BigDecimal.ZERO,
-                    AccountUtils.USER_ABSENT_MESSAGE,
-                    AccountType.NOT_MENTIONED
+                    customerID = AccountUtils.USER_ABSENT_MESSAGE,
+                    accountHolderName = AccountUtils.USER_ABSENT_MESSAGE,
+                    accountBalance = BigDecimal.ZERO,
+                    accountNumber = AccountUtils.USER_ABSENT_MESSAGE,
+                    accountType = AccountType.NOT_MENTIONED
                 )
             )
         }
         var account = accountRepository.findByAccountNumber(creditDebitRequest.accountNumber)
-        val contact = account.contact
-        val user = contact.user
+        val contact = account!!.contact
+        val user = contact!!.user
 
         if (!passwordEncoder.matches(creditDebitRequest.pinCode, account.pinCode)) {
             return ResponseEntity.badRequest().body(
                 AccountInfo(
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    BigDecimal.ZERO,
-                    AccountUtils.USER_INVALID_MESSAGE,
-                    AccountType.NOT_MENTIONED
+                    customerID = AccountUtils.USER_INVALID_MESSAGE,
+                    accountHolderName = AccountUtils.USER_INVALID_MESSAGE,
+                    accountBalance = BigDecimal.ZERO,
+                    accountNumber = AccountUtils.USER_INVALID_MESSAGE,
+                    accountType = AccountType.NOT_MENTIONED
                 )
             )
         }
@@ -270,11 +270,11 @@ class SecuredService:SecuredServiceInterface {
         if (currentBalance.compareTo(withdrawalAmount.add(BigDecimal.valueOf(500))) <= 0) {
             return ResponseEntity.ok(
                 AccountInfo(
-                    user.customerID,
-                    AccountUtils.LESS_AMOUNT_TO_DEBIT,
-                    account.accountBalance,
-                    account.accountNumber,
-                    account.accountType
+                    customerID = user!!.customerID,
+                    accountHolderName = AccountUtils.LESS_AMOUNT_TO_DEBIT,
+                    accountBalance = account.accountBalance,
+                    accountNumber = account.accountNumber,
+                    accountType = account.accountType
                 )
             )
         }
@@ -284,11 +284,11 @@ class SecuredService:SecuredServiceInterface {
         account = accountRepository.save(account)
         return ResponseEntity.ok(
             AccountInfo(
-                user.customerID,
-                user.firstName + " " + user.lastName,
-                account.accountBalance,
-                account.accountNumber,
-                account.accountType
+                customerID = user!!.customerID,
+                accountHolderName = user.firstName + " " + user.lastName,
+                accountBalance = account.accountBalance,
+                accountNumber = account.accountNumber,
+                accountType = account.accountType
             )
         )
     }
@@ -296,18 +296,18 @@ class SecuredService:SecuredServiceInterface {
 
     fun getAccounts(customerID: String?): ResponseEntity<List<AccountDetail>> {
         val user = userRepository.findByCustomerID(customerID!!)
-        val contact = user.contact
-        val accounts = contact.account
+        val contact = user!!.contact
+        val accounts = contact!!.account
 
         val accountDetails: MutableList<AccountDetail> = ArrayList()
 
-        for (account in accounts) {
+        for (account in accounts!!) {
             val accountDetail = AccountDetail(
-                user.firstName + " " + user.lastName,
-                account.accountNumber,
-                account.createdAt,
-                account.accountBalance,
-                account.accountType
+                holderName = user.firstName + " " + user.lastName,
+                accountNumber = account.accountNumber,
+                createdDate = account.createdAt!!,
+                balance = account.accountBalance,
+                accountType = account.accountType
             )
             accountDetails.add(accountDetail)
         }

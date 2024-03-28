@@ -17,10 +17,10 @@ class SchedulerService {
     @Scheduled(fixedDelay = 10000)
     fun updateData(){
 
-        val accounts:List<Account> = accountRepository.findByAccountType(AccountType.SAVINGS);
+        val accounts:List<Account?> = accountRepository.findByAccountType(AccountType.SAVINGS);
 
         for (account in accounts) {
-            var currentMoney = account.accountBalance
+            var currentMoney = account!!.accountBalance
             val additionalMoney = currentMoney.divide(BigDecimal.valueOf(100))
             currentMoney = currentMoney.add(additionalMoney)
             account.accountBalance = currentMoney

@@ -1,19 +1,18 @@
-package com.shreyash.BankApplication.repository;
+package com.shreyash.BankApplication.repository
 
-import com.shreyash.BankApplication.authorities.AccountType;
-import com.shreyash.BankApplication.entity.Account;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.shreyash.BankApplication.authorities.AccountType
+import com.shreyash.BankApplication.entity.Account
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
-import java.util.List;
+@Repository
+interface AccountRepository : JpaRepository<Account,Long>{
 
-public interface AccountRepository extends JpaRepository<Account, Long> {
+    fun findByAccountNumber(accountNumber: String?): Account?
 
+    fun existsByAccountNumber(accountNumber: String?): Boolean
 
-    public Account findByAccountNumber(String accountNumber);
-
-    boolean existsByAccountNumber(String accountNumber);
-
-    List<Account> findByAccountType(AccountType accountType);
+    fun findByAccountType(accountType: AccountType?): List<Account?>
 
 
 }

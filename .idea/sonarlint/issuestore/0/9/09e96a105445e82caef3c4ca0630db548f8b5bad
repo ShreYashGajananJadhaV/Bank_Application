@@ -1,0 +1,11 @@
+
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¿İà›8ÿï¸ã1J$347b0eab-e982-44b7-80d0-4112611ed7d8
+~	java:S125"<This block of commented-out lines of code should be removed.(»Á‘8Ê»Ó±ã1J$965a143a-79df-44d5-a612-1256038cbd58
+ƒ	java:S125"<This block of commented-out lines of code should be removed.(´Õ¸·øÿÿÿÿ8Ì»Ó±ã1J$d69fae58-860e-42cb-b669-c48a99233116
+y
+java:S1128"6Remove this unused import 'jakarta.ws.rs.SeBootstrap'.(’÷¿Û8ğ¸ã1J$64fe3bb5-add1-4ae0-aff0-087220ea2fd3
+ƒ
+java:S1128	";Remove this unused import 'lombok.RequiredArgsConstructor'.(ÑØúøÿÿÿÿ8ğ¸ã1J$a3494e92-3771-4c2e-bd15-1c4239c0915c
+›
+java:S1128
+"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡¸Îùÿÿÿÿ8Å¸¹ã1J$29a0d88f-d781-42df-89c5-95e9d5490456

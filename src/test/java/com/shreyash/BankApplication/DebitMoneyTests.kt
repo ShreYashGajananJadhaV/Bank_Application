@@ -68,7 +68,7 @@ class DebitMoneyTests {
 
         val contact = EntityObject.getContact()
 
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getSavingsAccount()
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
         user.password = passwordEncoder.encode(user.password)
@@ -116,7 +116,7 @@ class DebitMoneyTests {
 
         val contact = EntityObject.getContact()
 
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getCurrentAccount()
 
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
@@ -168,7 +168,7 @@ class DebitMoneyTests {
 
         val contact = EntityObject.getContact()
 
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getCurrentAccount()
 
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
@@ -208,15 +208,16 @@ class DebitMoneyTests {
             account.accountType
         )
 
-        val updatedAccount = Account()
+        val updatedAccount = Account(
+            accountID = 1,
+            accountNumber = account.accountNumber,
+            accountBalance = debitBalance,
+            pinCode = passwordEncoder.encode("8533"),
+            accountType = account.accountType,
+            createdAt = account.createdAt,
+            modifiedAt = LocalDateTime.now()
 
-        updatedAccount.accountID = 1
-        updatedAccount.accountNumber = account.accountNumber
-        updatedAccount.accountBalance = debitBalance
-        updatedAccount.pinCode = passwordEncoder.encode("8533")
-        updatedAccount.accountType = account.accountType
-        updatedAccount.modifiedAt = LocalDateTime.now()
-        updatedAccount.createdAt = LocalDateTime.now().minusDays(2)
+        )
 
 
         `when`(accountRepository.save(account)).thenReturn(updatedAccount)

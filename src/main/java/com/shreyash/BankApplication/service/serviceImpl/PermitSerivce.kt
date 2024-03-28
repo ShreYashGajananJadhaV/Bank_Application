@@ -8,6 +8,7 @@ import com.shreyash.BankApplication.repository.UserRepository
 import com.shreyash.BankApplication.service.PermitServiceInterface
 import com.shreyash.BankApplication.utils.AccountUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -32,11 +33,11 @@ class PermitSerivce :PermitServiceInterface{
     override fun createProfile(createProfileRequest: CreateProfileRequest): ResponseEntity<CreateProfileResponse> {
 
         val contactDetails = createProfileRequest.contact
-        if (contactRepository.existsByPanCard(contactDetails.panCard)) {
-            val user = contactRepository.findByPanCard(contactDetails.panCard).user
+        if (contactRepository.existsByPanCard(contactDetails.panCard) == true) {
+            val user = contactRepository.findByPanCard(contactDetails.panCard)!!.user
             return ResponseEntity.ok(
                 CreateProfileResponse(
-                    user.customerID,
+                    user!!.customerID,
                     user.firstName + " " + user.lastName,
                     AccountUtils.PROFILE_EXISTS_MESSAGE
                 )
@@ -44,26 +45,27 @@ class PermitSerivce :PermitServiceInterface{
         }
 
 
-        val user = User.builder()
-            .firstName(createProfileRequest.firstName)
-            .lastName(createProfileRequest.lastName)
-            .gender(createProfileRequest.gender)
-            .address(createProfileRequest.address)
-            .password(passwordEncoder.encode(createProfileRequest.password))
-            .customerID(
-                AccountUtils.generateCustomerId(
-                    createProfileRequest.firstName,
-                    createProfileRequest.contact.phoneNumber
-                )
+        val user = User(
+            firstName = createProfileRequest.firstName,
+            lastName = createProfileRequest.lastName,
+            gender = createProfileRequest.gender,
+            address = createProfileRequest.address,
+            password = passwordEncoder.encode(createProfileRequest.password),
+            customerID = AccountUtils.generateCustomerId(
+                createProfileRequest.firstName,
+                createProfileRequest.contact.phoneNumber
             )
-            .build()
 
-        val contact = Contact.builder()
-            .phoneNumber(contactDetails.phoneNumber)
-            .alternatePhoneNumber(contactDetails.alternatePhoneNumber)
-            .email(contactDetails.email)
-            .panCard(contactDetails.panCard)
-            .build()
+        )
+
+
+        val contact = Contact(
+            phoneNumber = contactDetails.phoneNumber,
+            alternatePhoneNumber = contactDetails.alternatePhoneNumber,
+            email = contactDetails.email,
+            panCard = contactDetails.panCard,
+        )
+
 
         user.contact = contact
         contact.user = user
@@ -72,10 +74,10 @@ class PermitSerivce :PermitServiceInterface{
         contactRepository.save(contact)
 
 
-        val emailDetails = EmailDetails()
-        emailDetails.recipient = contactDetails.email
-        emailDetails.subject = "PROFILE CREATE SUCCESS"
-        emailDetails.emailBody = """User profile created successfully with following details:
+        val emailDetails = EmailDetails(
+            contactDetails.email,
+            "PROFILE CREATE SUCCESS",
+            """User profile created successfully with following details:
 
             Username: ${user.firstName} ${user.lastName}
 
@@ -86,14 +88,15 @@ class PermitSerivce :PermitServiceInterface{
             Phone-Number: ${contactDetails.phoneNumber}
 
 """
+        )
 
         emailService.sendEmail(emailDetails)
 
         return ResponseEntity.ok(
             CreateProfileResponse(
-                user.customerID,
-                user.firstName+" "+user.lastName,
-                AccountUtils.PROFILE_CREATION_MESSAGE
+                customerID = user.customerID,
+                username = user.firstName+" "+user.lastName,
+                status = AccountUtils.PROFILE_CREATION_MESSAGE
             )
         )
 
@@ -103,18 +106,18 @@ class PermitSerivce :PermitServiceInterface{
     override fun signIn(signInRequest: SignInRequest):ResponseEntity<SignInResponse>{
 
         val accountExists = userRepository.existsByCustomerID(signInRequest.customerID)
-        if (!accountExists) {
+        if (accountExists == false) {
             return ResponseEntity.badRequest().body(
                 SignInResponse(
-                    AccountUtils.USER_ABSENT_MESSAGE,
-                    AccountUtils.USER_NO_DATA_FOUND
+                    status = AccountUtils.USER_ABSENT_MESSAGE,
+                    username = AccountUtils.USER_NO_DATA_FOUND
                 )
             )
         }
 
         val user = userRepository.findByCustomerID(signInRequest.customerID)
 
-        val actualPassword = user.password
+        val actualPassword = user!!.password
         val sentPassword = signInRequest.password
 
         return if (passwordEncoder.matches(sentPassword, actualPassword)) {
@@ -122,13 +125,13 @@ class PermitSerivce :PermitServiceInterface{
             ResponseEntity.ok(
                 SignInResponse(
                     AccountUtils.USER_ACTIVE_MESSAGE,
-                    user.firstName + " " + user.lastName
+                    user!!.firstName + " " + user.lastName
                 )
             )
         } else ResponseEntity.badRequest().body(
             SignInResponse(
-                AccountUtils.USER_INVALID_MESSAGE,
-                AccountUtils.USER_NO_DATA_FOUND
+                status = AccountUtils.USER_INVALID_MESSAGE,
+                username = AccountUtils.USER_NO_DATA_FOUND
             )
         )
 

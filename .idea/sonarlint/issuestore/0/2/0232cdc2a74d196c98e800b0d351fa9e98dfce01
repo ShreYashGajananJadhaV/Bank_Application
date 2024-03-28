@@ -1,0 +1,8 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÏÏİóûÿÿÿÿ
+s
+java:S1128"QRemove this unused import 'org.springframework.context.annotation.ComponentScan'.(æëòÒûÿÿÿÿ8À­îà1
+g
+java:S1128"ERemove this unused import 'org.springframework.stereotype.Component'.(Ş÷Ñ¸ÿÿÿÿÿ8À­îà1
+h
+java:S1128"FRemove this unused import 'org.springframework.stereotype.Repository'.(¦ıÍıüÿÿÿÿ8ı­ãšá1

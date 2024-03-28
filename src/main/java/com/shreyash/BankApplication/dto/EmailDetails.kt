@@ -6,10 +6,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmailDetails {
+class EmailDetails (
 
-    private String recipient;
-    private String subject;
-    private String emailBody;
-
-}
+    val recipient:String,
+    val subject:String,
+    val emailBody:String
+)

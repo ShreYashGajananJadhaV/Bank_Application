@@ -63,23 +63,25 @@ class EmailService: EmailServiceInterface{
     override fun changePassword(changePasswordDetails: ChangePasswordDetails): String {
         val newPassword = changePasswordDetails.newPassword
         val customerID = changePasswordDetails.customerID
-        if (!userRepository.existsByCustomerID(customerID)) {
+        if (userRepository.existsByCustomerID(customerID) == false) {
             return "ACCOUNT-NOT-EXIST"
         }
         val user = userRepository.findByCustomerID(customerID)
-        val contact = user.contact
+        val contact = user!!.contact
         user.password = passwordEncoder.encode(newPassword)
-        contact.user = user
+        contact!!.user = user
         userRepository.save(user)
         contactRepository.save(contact)
-        val emailDetails = EmailDetails()
-        emailDetails.recipient = contact.email
-        emailDetails.subject = "Password CHANGE SUCCESS"
-        emailDetails.emailBody = """Password for the user: ${user.firstName} ${user.lastName} 
+        val emailDetails = EmailDetails(
+            contact.email,
+            "Password CHANGE SUCCESS",
+            """Password for the user: ${user.firstName} ${user.lastName} 
 
                                     with Customer-ID: ${user.customerID}
 
                                     has been changed successfully.Please login and confirm."""
+        )
+
         sendEmail(emailDetails)
         return "Password changed successfully. CHECK THE MAIL"
     }
@@ -88,11 +90,11 @@ class EmailService: EmailServiceInterface{
     // is not authenticated uses params phoneNum and panNum(No need for authentication. Sends token for next step of changing password)
     override fun forgotPasswordAuthentication(forgotpassDetails: ForgotPasswordDetails): ResponseEntity<String> {
         val panCardNumber = forgotpassDetails.panCardNumber
-        if (!contactRepository.existsByPanCard(panCardNumber)) {
+        if (contactRepository.existsByPanCard(panCardNumber) == false) {
             return ResponseEntity.notFound().build()
         }
-        val user = contactRepository.findByPanCard(panCardNumber).user
-        return ResponseEntity.ok(user.customerID)
+        val user = contactRepository.findByPanCard(panCardNumber)!!.user
+        return ResponseEntity.ok(user!!.customerID)
     }
 
 

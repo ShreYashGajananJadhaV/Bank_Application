@@ -1,0 +1,8 @@
+
+	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(»©® J$bf6628d7-e46f-4e1d-904a-8e8463564d7a
+ˆ	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(¡å£©8æ—ÖÈâ1J$914f36a2-be40-43e9-8268-3d6f4bb49129
+š	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¢öêûÿÿÿÿJ$ffcac46c-0a51-4ea2-8c0d-9d313f18c8d0
+§
+java:S1128"dRemove this unused import 'org.hibernate.engine.transaction.jta.platform.internal.ResinJtaPlatform'.(·µĞ¡8¦©œ¡è1J$415dbdc9-7c57-489a-a92e-a64a691d531a
+`
+java:S1128"CRemove this unused import 'org.springframework.stereotype.Service'.(¼º¡Ú8Œ­¢è1

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="AutoImportedSourceRoots">
+    <option name="directories">
+      <list>
+        <option value="D:\All downloads\SpringProjects\BankApplication/src/main/java" />
+        <option value="D:\All downloads\SpringProjects\BankApplication/src/main/kotlin" />
+        <option value="D:\All downloads\SpringProjects\BankApplication/src/test/java" />
+        <option value="D:\All downloads\SpringProjects\BankApplication/src/test/kotlin" />
+        <option value="src/main/java" />
+        <option value="target/generated-sources/annotations" />
+      </list>
+    </option>
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="8fb850fa-7bb1-4449-93da-ec37ebf82e9b" />
+  </component>
+</module>

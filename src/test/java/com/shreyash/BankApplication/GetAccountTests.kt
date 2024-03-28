@@ -35,7 +35,7 @@ class GetAccountTests {
 
         val contact = EntityObject.getContact()
 
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getCurrentAccount()
 
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
@@ -56,7 +56,7 @@ class GetAccountTests {
         val accountDetail = AccountDetail(
             user.firstName + " " + user.lastName,
             account.accountNumber,
-            account.createdAt,
+            account.createdAt!!,
             account.accountBalance,
             account.accountType
         )

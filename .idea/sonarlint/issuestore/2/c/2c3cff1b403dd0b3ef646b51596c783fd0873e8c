@@ -1,0 +1,5 @@
+
+	java:S112	"FDefine and throw a dedicated exception instead of using a generic one.(Ñ™Ğ™üÿÿÿÿ8ÜäŒä1J$5754543a-b022-455b-95dd-3f665961aff2
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¢öêûÿÿÿÿ8¬óÆ¶â1J$765c89c0-1e0b-472f-ac2f-007c59a70611
+†
+java:S1128"CRemove this unused import 'org.springframework.stereotype.Service'.(¼º¡Ú8À²¢è1J$515c1222-9c31-477c-aa75-520cf6667829

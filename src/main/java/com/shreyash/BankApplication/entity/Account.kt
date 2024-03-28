@@ -16,23 +16,24 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account {
+class Account (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int accountID;
-    private String accountNumber;
-    private BigDecimal accountBalance;
+    val accountID:Long? = null,
+    val accountNumber:String,
+    var accountBalance:BigDecimal,
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    val createdAt:LocalDateTime? =  null,
     @UpdateTimestamp
-    private LocalDateTime modifiedAt;
-    private String pinCode;
+    val modifiedAt:LocalDateTime? = null,
+    var pinCode:String,
     @Enumerated(EnumType.STRING)
-    private AccountType accountType;
+    val accountType:AccountType,
 
     @ManyToOne
     @JoinColumn(name = "fk_contactID")
-    private Contact contact;
+    var contact:Contact?=null
 
-}
+    )
+

@@ -2,6 +2,8 @@ package com.shreyash.BankApplication.service;
 
 import com.shreyash.BankApplication.dto.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
 
 public interface SecuredServiceInterface {
 

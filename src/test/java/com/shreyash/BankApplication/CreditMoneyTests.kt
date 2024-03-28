@@ -26,15 +26,16 @@ import java.time.LocalDateTime
 class CreditMoneyTests {
 
     @MockBean
-    private lateinit var accountRepository:AccountRepository;
+    private lateinit var accountRepository: AccountRepository;
 
     @Autowired
-    private lateinit var securedService:SecuredService;
+    private lateinit var securedService: SecuredService;
 
     @Autowired
-    private lateinit var passwordEncoder:PasswordEncoder;
+    private lateinit var passwordEncoder: PasswordEncoder;
+
     @Test
-    fun creditTestFalseAccount(){
+    fun creditTestFalseAccount() {
 
         val creditDebitRequest = CreditDebitRequest(
             "2024221591",
@@ -61,13 +62,13 @@ class CreditMoneyTests {
     }
 
     @Test
-    fun creditTestFalsePinCode(){
+    fun creditTestFalsePinCode() {
 
         val user = EntityObject.getUser()
 
         val contact = EntityObject.getContact()
 
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getSavingsAccount()
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
         user.password = passwordEncoder.encode(user.password)
@@ -109,14 +110,14 @@ class CreditMoneyTests {
 
 
     @Test
-    fun creditTestSuccess(){
+    fun creditTestSuccess() {
 
 
         val user = EntityObject.getUser()
 
         val contact = EntityObject.getContact()
 
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getSavingsAccount()
 
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
@@ -156,15 +157,16 @@ class CreditMoneyTests {
             account.accountType
         )
 
-        val updatedAccount = Account()
+        val updatedAccount = Account(
+            accountID = 1,
+            accountNumber = account.accountNumber,
+            accountBalance = creditBalance,
+            pinCode = passwordEncoder.encode("8533"),
+            accountType = account.accountType,
+            createdAt = account.createdAt,
+            modifiedAt = LocalDateTime.now()
+        )
 
-        updatedAccount.accountID = 1
-        updatedAccount.accountNumber = account.accountNumber
-        updatedAccount.accountBalance = creditBalance
-        updatedAccount.pinCode = passwordEncoder.encode("8533")
-        updatedAccount.accountType = account.accountType
-        updatedAccount.modifiedAt = LocalDateTime.now()
-        updatedAccount.createdAt = LocalDateTime.now().minusDays(2)
 
 
         `when`(accountRepository.save(account)).thenReturn(updatedAccount)

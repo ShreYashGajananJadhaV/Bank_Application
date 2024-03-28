@@ -1,5 +1,6 @@
 package com.shreyash.BankApplication.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,28 +11,28 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+class User (
 
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ID;
-    private String customerID;
-    private String firstName;
-    private String lastName;
-    private String gender;
-    private String address;
-    private String password;
+    val ID:Int?=null,
+    val customerID:String,
+    val firstName:String,
+    val lastName:String,
+    val gender:String,
+    val address:String,
+    var password:String,
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "contactID")
-    private  Contact contact;
+    var contact:Contact? = null
 
 
-}
+)

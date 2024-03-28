@@ -1,10 +1,9 @@
 package com.shreyash.BankApplication.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "contacts")
@@ -13,21 +12,21 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Contact {
+data class Contact (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long contactID;
-    private String phoneNumber;
-    private String alternatePhoneNumber;
-    private String email;
-    private String panCard;
+    val contactID:Long? = null,
+    val phoneNumber:String,
+    val alternatePhoneNumber:String,
+    val email:String,
+    val panCard:String,
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name = "fk_contactID", referencedColumnName = "contactID")
-    private Set<Account> account;
+    var account: Set<Account>? = null,
 
     @OneToOne(mappedBy = "contact")
-    private User user;
+    var user:User? = null
 
-}
+    )

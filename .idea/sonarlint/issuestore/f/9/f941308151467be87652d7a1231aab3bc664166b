@@ -1,0 +1,11 @@
+
+œ	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ÿ‡à±8èëÄâ1J$ab4e6500-3bd4-4588-b1cc-20be6d83c7da
+}
+java:S1118":Add a private constructor to hide the implicit public one.(±éó8şëÄâ1J$2c7a06eb-007a-4193-b54a-741bcb668d01
+a
+java:S2119*"Save and re-use this "Random".(ŒĞï‚8ŠëÄâ1J$8acd9f54-b709-4a9b-a17e-bb777091c54d
+ƒ	java:S1250"<This block of commented-out lines of code should be removed.(Ò·¼­ùÿÿÿÿ8¤¤èŒä1J$59b2ac7d-b024-49ce-b1cd-32711a8228be
+‚
+java:S1128"?Remove this unused import 'jakarta.persistence.GeneratedValue'.(‘ŒÇŒ8ëÄâ1J$4338296d-a0b1-4604-ac55-7bea845693db
+‚
+java:S1128"?Remove this unused import 'jakarta.persistence.GenerationType'.(²ºëÊ8ëÄâ1J$01acb537-2679-48f0-acd0-874fee14939d

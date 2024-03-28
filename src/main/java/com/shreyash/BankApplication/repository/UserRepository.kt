@@ -1,14 +1,12 @@
-package com.shreyash.BankApplication.repository;
+package com.shreyash.BankApplication.repository
 
-import com.shreyash.BankApplication.entity.User;
-import org.reactivestreams.Publisher;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.shreyash.BankApplication.entity.User
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
+@Repository
+interface UserRepository : JpaRepository<User,Int> {
 
-public interface UserRepository extends JpaRepository<User,Long> {
-
-
-    public Boolean existsByCustomerID(String customerID);
-    public User findByCustomerID(String customerID);
-
+    fun existsByCustomerID(customerID: String?): Boolean?
+    fun findByCustomerID(customerID: String?): User?
 }

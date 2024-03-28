@@ -67,7 +67,7 @@ class BalanceEnquiryTests {
         `when`(accountRepository.existsByAccountNumber(enquiryRequest.accountNumber)).thenReturn(
             true
         )
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getSavingsAccount()
 
 
         `when`(accountRepository.findByAccountNumber(enquiryRequest.accountNumber)).thenReturn(
@@ -92,7 +92,7 @@ class BalanceEnquiryTests {
     fun balanceTestSuccess() {
         val user = EntityObject.getUser()
         val contact = EntityObject.getContact()
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getSavingsAccount()
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
         account.contact = contact
@@ -115,8 +115,8 @@ class BalanceEnquiryTests {
         )
 
         val accountInfo = AccountInfo(
-            user.getCustomerID(),
-            user.getFirstName() + " " + user.getLastName(),
+            user.customerID,
+            user.firstName + " " + user.lastName,
             account.accountBalance,
             account.accountNumber,
             account.accountType

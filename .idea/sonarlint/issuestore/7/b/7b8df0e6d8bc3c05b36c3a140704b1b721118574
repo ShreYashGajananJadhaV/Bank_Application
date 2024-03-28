@@ -1,0 +1,8 @@
+
+•	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(­Ù“¥J$9bcd1b3d-cd97-4be8-bd6e-8c2a37bf8951
+›
+java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Qualifier'.(íàÄ®ıÿÿÿÿ8«ºßíà1J$4911a712-fd5d-4b6e-a9b6-becec261fedc
+™
+java:S1128"QRemove this unused import 'org.springframework.context.annotation.ComponentScan'.(æëòÒûÿÿÿÿ8«ºßíà1J$07c375e9-dbf6-45df-9db6-079df34e46eb
+©
+java:S1128"aRemove this unused import 'org.springframework.data.jpa.repository.config.EnableJpaRepositories'.(²œ˜üÿÿÿÿ8‡ÄÙŸè1J$1ae05b2f-8573-4dfb-86c6-ef48df4283af

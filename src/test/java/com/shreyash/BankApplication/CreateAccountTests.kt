@@ -42,7 +42,7 @@ class CreateAccountTests {
 
         val contact = EntityObject.getContact()
 
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getSavingsAccount()
 
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
@@ -71,7 +71,7 @@ class CreateAccountTests {
             AccountUtils.ACCOUNT_EXISTS_CODE,
             AccountUtils.ACCOUNT_EXISTS_MESSAGE,
             AccountInfo(
-                contact.user.customerID,
+                contact.user!!.customerID,
                 user.firstName,
                 account.accountBalance,
                 account.accountNumber,
@@ -94,9 +94,8 @@ class CreateAccountTests {
 
         val contact = EntityObject.getContact()
 
-        val account = EntityObject.getAccount()
+        val account = EntityObject.getCurrentAccount()
 
-        account.accountType = AccountType.CURRENT
 
         account.pinCode = passwordEncoder.encode(account.pinCode)
         user.password = passwordEncoder.encode(user.password)
@@ -125,10 +124,10 @@ class CreateAccountTests {
                         AccountUtils.ACCOUNT_EXISTS_CODE,
                         AccountUtils.ACCOUNT_EXISTS_MESSAGE,
                         AccountInfo(
-                                contact.getUser().getCustomerID(),
-                                user.getFirstName(),
-                                account.getAccountBalance(),
-                                account.getAccountNumber(),
+                                contact.user!!.customerID,
+                                user.firstName,
+                                account.accountBalance,
+                                account.accountNumber,
                                 AccountType.CURRENT
                         ))))
             .usingRecursiveComparison()
